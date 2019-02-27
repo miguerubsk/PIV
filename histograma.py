@@ -30,8 +30,6 @@ r= cv2.imshow ('image ', hist )
 #plt.ylabel('cantidad de pixeles')
 #plt.show()
 
-min = 0
-max = 255
 xmax = 0
 xmin = 0
 
@@ -46,17 +44,17 @@ for n in reversed(range(256)):
 		break
 		
 
-print(xmax)
-print(xmin)
+print("Valor máximo: " + str(xmax))
+print("Valor mínimo: " + str(xmin))
 
 ensanchar = np.zeros((filas,columnas),np.uint8)
 
 for i in range(filas):
 	for x in range(columnas):
-		ensanchar[i,x] = 0 + ( ( (img[i,x]-xmin) * (255-0) ) / (xmax - xmin) )
+		ensanchar[i,x] = 0 + ( ( (img[i,x]-xmin) * 255 ) / (xmax - xmin) )
  
 
-tuputamadre = cv2.imshow("NUEVA", ensanchar)
+g = cv2.imshow("CONTRASTE", ensanchar)
 
 cv2.imwrite("p3_ensanchado.png",ensanchar)
 
