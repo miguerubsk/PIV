@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from array import array
 
 
-Nombre = "p3.png" #input("Nombre de la imagen con la extensión: ")
+Nombre = input("Nombre de la imagen con la extensión: ")
 
 img=cv2.imread(Nombre,cv2.IMREAD_GRAYSCALE)
 
