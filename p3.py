@@ -15,6 +15,7 @@ histograma=[0 for i in range(256)]
 for i in img:
     for j in i:
         histograma[j]+=1
+
 hist = np.zeros((500, 256*3, 3), np.uint8)
 hist[:]=(255 , 255, 255 )
 x=0
@@ -22,7 +23,7 @@ for i in histograma:
     cv2.rectangle(hist,(x,int((max(histograma)-i)/40)),(x+3,int(max(histograma)/40)),(0,0,0),-1)
     x+=3
 
-r= cv2.imshow ('image ', hist )
+r= cv2.imshow ('HISTOGRAMA', hist )
 
 
 #plt.plot(histograma, color='gray' )
@@ -57,6 +58,20 @@ for i in range(filas):
 g = cv2.imshow("CONTRASTE", ensanchar)
 
 cv2.imwrite("p3_ensanchado.png",ensanchar)
+
+histograma1=[0 for i in range(256)]
+for i in ensanchar:
+    for j in i:
+        histograma1[j]+=1
+
+hist1 = np.zeros((500, 256*3, 3), np.uint8)
+hist1[:]=(255 , 255, 255 )
+x=0
+for i in histograma1:
+    cv2.rectangle(hist1,(x,int((max(histograma1)-i)/40)),(x+3,int(max(histograma1)/40)),(0,0,0),-1)
+    x+=3
+
+r= cv2.imshow ('HISTOGRAMA1', hist1 )
 
 
 cv2.waitKey (0)
