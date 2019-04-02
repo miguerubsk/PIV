@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from array import array
 
 
-Nombre = "p3.png" #input("Introduzca el nombre de la imagen con la extensión: ")
+Nombre = input("Introduzca el nombre de la imagen con la extensión: ")
 img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
 filas, columnas = img.shape
 r = cv2.imshow(Nombre, img)
