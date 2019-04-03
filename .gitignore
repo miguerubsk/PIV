@@ -1,4 +1,26 @@
 
 *.jpg
+
 *.pdf
+
 *.png
+
+*.zip
+
+*.part
+*.tif
+*.txt
+*.plist
+ImageJ.app/Contents/MacOS/ImageJ-macosx
+*.old
+ImageJ.app/Contents/MacOS/ImageJ-tiger
+*.icns
+*.gz
+*.exe
+*.jar
+*.md
+*.m
+ImageJ.app/ImageJ-linux64
+ImageJ.app/ImageJ-linux32
+ImageJ.app/Contents/PkgInfo
+ImageJ.app/.checksums
