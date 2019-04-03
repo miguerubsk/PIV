@@ -59,7 +59,6 @@ def calcularUmbralOtsu(histograma):
 			if sigmab2 > sigmab2max:
 				sigmab2max = sigmab2
 				T = i
-				print(str(i))
 	print("El umbral es: "+str(T))
 	return int(T)
 
