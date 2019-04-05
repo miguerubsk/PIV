@@ -95,16 +95,16 @@ if __name__ == '__main__':
 		menu()
 		opcionMenu = input("Elija una opción: ")
 		if opcionMenu=="1":
-			print("Umbralizando la imagen... \nEspera")
+			print("Umbralizando la imagen... \nEspera#")
 			#Carga de la imagen con la que se va a trabjar
 			Nombre = "triangulo.png" #input("Introduzca el nombre de la imagen con extension: ")
 			img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
 			#Se mustra la imagen original
-			r = cv2.imshow(Nombre, img)
+			#r = cv2.imshow(Nombre, img)
 			#Se umbraliza con el método general
 			result = umbralizar(img, calcularUmbralGeneral(img))
 			#Se muestra la imagen resultante y se graba en un fichero
-			p = cv2.imshow(Nombre+"_umbralizacion", result)
+			#p = cv2.imshow(Nombre+"_umbralizacion", result)
 			cv2.imwrite("p3_umbralizacion_general.png",result)
 			print("Terminado, comprueba la imagen resultante: p3_umbralizacion_general.png")
 			input("Pulsa una tecla para continuar")
@@ -115,11 +115,11 @@ if __name__ == '__main__':
 			Nombre = "triangulo.png" #input("Introduzca el nombre de la imagen con extension: ")
 			img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
 			#Se mustra la imagen original
-			r = cv2.imshow(Nombre, img)
+			#r = cv2.imshow(Nombre, img)
 			#Se umbraliza la imagen con el método Otsu
 			result = umbralizar(img, calcularUmbralOtsu(calculoHistograma(img)))
 			#Se muestra la imagen resultante y se graba en un fichero
-			p = cv2.imshow(Nombre+"_umbralizacion_otsu", result)
+			#p = cv2.imshow(Nombre+"_umbralizacion_otsu", result)
 			cv2.imwrite("p3_umbralizacion_otsu.png",result)
 			print("Terminado, comprueba la imagen resultante: p3_umbralizacion_otsu.png")
 			input("Pulsa una tecla para continuar")
@@ -132,6 +132,7 @@ if __name__ == '__main__':
 			input("Pulsa una tecla para continuar")
 		elif opcionMenu=="0":
 			cv2.destroyAllWindows()
+			os.system('clear')
 			break
 		else:
 			print ("")
