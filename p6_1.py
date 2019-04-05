@@ -36,31 +36,19 @@ def calcularUmbralGeneral(img):
 	return umbral
 
 def calcularUmbralOtsu(histograma):
-	#vector de probabilidad acumulada
-	omega = [0 for i in range(256)]
-
-	mean = [0 for i in range(256)]
-
-	omega[0] = histograma[0]
-	for i in range(len(histograma)):
-		omega[i] = omega[i-1] + histograma[i]
-		mean[i] = mean[i-1] + i*histograma[i]
-	sigmab2 = 0
-	mt = mean[len(histograma)-1]
-	sigmab2max = 0
-	T = 0
-	for i in range(len(histograma)):
-		clase1 = omega[i]
-		clase2 = 1- clase1
-		if clase1 != 0 and clase2 != 0:
-			m1 = mean[i] / clase1
-			m2 = (mt -mean[i]) / clase2
-			sigmab2 = (clase1 * (m1 - mt) * (m1 - mt) +clase2 * (m2 - mt) * (m2 - mt))
-			if sigmab2 > sigmab2max:
-				sigmab2max = sigmab2
-				T = i
-	print("El umbral es: "+str(T))
-	return int(T)
+	val_max = -999
+	umbral = -1
+	for t in range(1,255):
+	    q1 = np.sum(histograma[:t])
+	    q2 = np.sum(histograma[t:])
+	    m1 = np.sum(np.array([i for i in range(t)])*histograma[:t])/q1
+	    m2 = np.sum(np.array([i for i in range(t,256)])*histograma[t:])/q2
+	    val = q1*(1-q1)*np.power(m1-m2,2)
+	    if val_max < val:
+	        val_max = val
+	        umbral = t
+	print("El umbral es: " + str(umbral))
+	return umbral
 
 
 
@@ -86,9 +74,9 @@ if __name__ == '__main__':
 	img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
 	r = cv2.imshow(Nombre, img)
 
-	#result = umbralizar(img, calcularUmbralGeneral(img))
-	#p = cv2.imshow(Nombre+"_umbralizacion", result)
-	#cv2.imwrite("p3_umbralizacion.png",result)
+	result = umbralizar(img, calcularUmbralGeneral(img))
+	p = cv2.imshow(Nombre+"_umbralizacion", result)
+	cv2.imwrite("p3_umbralizacion.png",result)
 
 	result = umbralizar(img, calcularUmbralOtsu(calculoHistograma(img)))
 	p = cv2.imshow(Nombre+"_umbralizacion_otsu", result)
