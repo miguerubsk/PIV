@@ -5,7 +5,6 @@ from array import array
 
 
 def menu():
-
 	os.system('clear')
 	print("========================MENÚ========================")
 	print("\t1 - Umbralización general")
@@ -14,8 +13,6 @@ def menu():
 	print("\t4 - Umbralización por pixel")
 	print("\t0 - salir")
 	print("====================================================")
-
-
 
 
 def calculoHistograma(img):
