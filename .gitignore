@@ -24,3 +24,5 @@ ImageJ.app/ImageJ-linux64
 ImageJ.app/ImageJ-linux32
 ImageJ.app/Contents/PkgInfo
 ImageJ.app/.checksums
+ej1.py
+*.docx

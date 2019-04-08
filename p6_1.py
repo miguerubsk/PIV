@@ -1,6 +1,19 @@
-import sys, numpy as np, cv2
+import sys, numpy as np, cv2, os
 from matplotlib import pyplot as plt
 from array import array
+
+
+
+def menu():
+	os.system('clear')
+	print("========================MENÚ========================")
+	print("\t1 - Umbralización general")
+	print("\t2 - Umbralización otsu")
+	print("\t3 - Umbralización por bloques")
+	print("\t4 - Umbralización por pixel")
+	print("\t0 - salir")
+	print("====================================================")
+
 
 def calculoHistograma(img):
 	histograma=[0 for i in range(256)]
@@ -8,6 +21,19 @@ def calculoHistograma(img):
 	    for j in i:
 	        histograma[j]+=1
 	return histograma
+
+
+def prob(img):
+	grises=calculoHistograma(img)
+	filas, columnas = img.shape
+	x=0
+	prob=[0 for i in range(256)]
+	for i in grises:
+		t=i/(filas*columnas)
+		prob[x]=t
+		x+=1
+	return prob
+
 
 def calcularUmbralGeneral(img):
 	umbral = 127
@@ -31,24 +57,55 @@ def calcularUmbralGeneral(img):
 		T = umbral
 		umbral = ( (aux1/g1) + (aux2/g2) )/2
 	
-	print("El umbral es: "+str(umbral))
+	print("El umbral general es: "+str(umbral))
 
 	return umbral
 
-def calcularUmbralOtsu(histograma):
-	val_max = -999
-	umbral = -1
-	for t in range(1,255):
-	    q1 = np.sum(histograma[:t])
-	    q2 = np.sum(histograma[t:])
-	    m1 = np.sum(np.array([i for i in range(t)])*histograma[:t])/q1
-	    m2 = np.sum(np.array([i for i in range(t,256)])*histograma[t:])/q2
-	    val = q1*(1-q1)*np.power(m1-m2,2)
-	    if val_max < val:
-	        val_max = val
-	        umbral = t
-	print("El umbral es: " + str(umbral))
-	return umbral
+def calcularUmbralOtsu(img):
+	ecualizada = prob(img)
+
+	mg = 0.0
+	for i in range(256):
+		mg = mg + i*ecualizada[i]
+
+	mk = [0.0 for i in range(256)]
+	pk = [0.0 for i in range(256)]
+
+	#print(pk)
+	for i in range(256):
+		a=0.0
+		b=0.0
+		for j in range(i+1):
+			a = a + j*ecualizada[j]
+			b = b + ecualizada[j]
+		mk[i] = a
+		pk[i] = b
+		
+	#print(pk)
+	maximo = 0.0
+	
+	nozzero = [0.0 for i in range(256)]
+	#print(nozzero)
+	resultado = [0.0 for i in range(256)]
+	for k in range(256):
+		nozzero[k] = 0.0
+		#print(nozzero[k])
+		a = pk[k]
+		b = 1-pk[k]
+		nozzero[k] = a*abs(b)
+		#print(nozzero[k])
+		
+		if nozzero[k] != 0:
+			resultado[k] = ((abs((mg * float(pk[k])) - float(mk[k]))**2)/nozzero[k])
+
+	indice = 0
+	for k in range(256):
+		if resultado[k] > maximo:
+			maximo = resultado[k]
+			indice = k
+
+	print("El umbral otsu es: "+str(indice))
+	return indice
 
 
 
@@ -67,20 +124,57 @@ def umbralizar(img, umbral):
 
 
 
+#def umbralizarBloques(img):
+
+
+
+
 
 if __name__ == '__main__':
 
-	Nombre = "triangulo.png" #input("Introduzca el nombre de la imagen con extension: ")
-	img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
-	r = cv2.imshow(Nombre, img)
-
-	result = umbralizar(img, calcularUmbralGeneral(img))
-	p = cv2.imshow(Nombre+"_umbralizacion", result)
-	cv2.imwrite("p3_umbralizacion.png",result)
-
-	result = umbralizar(img, calcularUmbralOtsu(calculoHistograma(img)))
-	p = cv2.imshow(Nombre+"_umbralizacion_otsu", result)
-	cv2.imwrite("p3_umbralizacion_otsu.png",result)
-
-	cv2.waitKey (0)
-	cv2.destroyAllWindows()#
+	while True:
+		menu()
+		opcionMenu = input("Elija una opción: ")
+		if opcionMenu=="1":
+			#Carga de la imagen con la que se va a trabjar
+			Nombre = input("Introduzca el nombre de la imagen con extension: ")
+			img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
+			#Se mustra la imagen original
+			#r = cv2.imshow(Nombre, img)
+			#Se umbraliza con el método general
+			print("Umbralizando la imagen... \nEspera")
+			result = umbralizar(img, calcularUmbralGeneral(img))
+			#Se muestra la imagen resultante y se graba en un fichero
+			#p = cv2.imshow(Nombre+"_umbralizacion", result)
+			cv2.imwrite(Nombre+"_umbralizacion_general.png",result)
+			print("Terminado, comprueba la imagen resultante: "+Nombre+"_umbralizacion_general.png")
+			input("Pulsa una tecla para continuar")
+			cv2.destroyAllWindows()
+		elif opcionMenu=="2":
+			#Carga de la imagen con la que se va a trabjar
+			Nombre = input("Introduzca el nombre de la imagen con extension: ")
+			img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
+			#Se mustra la imagen original
+			#r = cv2.imshow(Nombre, img)
+			#Se umbraliza la imagen con el método Otsu
+			print("Umbralizando la imagen... \nEspera")
+			result = umbralizar(img, calcularUmbralOtsu(img))
+			#Se muestra la imagen resultante y se graba en un fichero
+			#p = cv2.imshow(Nombre+"_umbralizacion_otsu", result)
+			cv2.imwrite(Nombre+"_umbralizacion_otsu.png",result)
+			print("Terminado, comprueba la imagen resultante:"+Nombre+" _umbralizacion_otsu.png")
+			input("Pulsa una tecla para continuar")
+			cv2.destroyAllWindows()
+		elif opcionMenu=="3":
+			print("NO SOPORTADO")
+			input("Pulsa una tecla para continuar")
+		elif opcionMenu=="4":
+			print("NO SOPORTADO")
+			input("Pulsa una tecla para continuar")
+		elif opcionMenu=="0":
+			cv2.destroyAllWindows()
+			os.system('clear')
+			break
+		else:
+			print ("")
+			input("No has pulsado ninguna opción correcta...\nPulsa una tecla para continuar")
