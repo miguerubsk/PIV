@@ -124,7 +124,44 @@ def umbralizar(img, umbral):
 
 
 
-#def umbralizarBloques(img):
+def umbralizarBloques(img, m, n, umbral):
+	filas, columnas = img.shape
+	x = int(filas/m)
+	y = int(columnas/n)
+
+
+	bloques = []
+	for i in range(m):
+		for j in range(n):
+			bloque=np.zeros((x,y), np.uint8)
+			for k in range(x):
+				for l in range(y):
+					bloque[k,l]=img[(i*x)+k,(j*y)+l]
+		if umbral == "Otsu":
+			bloque = umbralizar(bloque, calcularUmbralOtsu(bloque))
+		if umbral == "General":
+			bloque = umbralizar(bloque, calcularUmbralGeneral(bloque))
+
+		bloques.append(bloque)
+
+	ordenada = np.zeros((filas, columnas), np.uint8)
+	l = 0
+	o = 0
+	for i in bloques:
+		for j in range(x):
+			for k in range(y):
+				ordenada[(l*x)+j,(o*y)+k] = i[j,k]
+		if l<n:
+			l+=1
+		if l==n:
+			o+=1
+			j=0
+		cv2.imshow("Ventana",ordenada)
+		cv2.waitKey (0)
+	return ordenada
+
+
+
 
 
 
@@ -166,8 +203,19 @@ if __name__ == '__main__':
 			input("Pulsa una tecla para continuar")
 			cv2.destroyAllWindows()
 		elif opcionMenu=="3":
-			print("NO SOPORTADO")
+			Nombre = input("Introduzca el nombre de la imagen con extension: ")
+			img = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
+			Nombre = input("Introduce el nombre de la imagen a grabar: ")
+			m = input("Introduzca el numero de divisiones en filas: ")
+			n = input("Introduzca el numero de divisiones en columnas: ")
+			umbral = input("Introduzca el tipo de umbral que desea usar (Otsu)(General): ")
+			#Se mustra la imagen original
+			#r = cv2.imshow(Nombre, img)
+			#Se umbraliza la imagen con el método Otsu
+			print("Umbralizando la imagen... \nEspera")
+			cv2.imwrite(Nombre,umbralizarBloques(img, int(m), int(n), umbral))
 			input("Pulsa una tecla para continuar")
+			cv2.destroyAllWindows()
 		elif opcionMenu=="4":
 			print("NO SOPORTADO")
 			input("Pulsa una tecla para continuar")
