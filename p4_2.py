@@ -32,4 +32,4 @@ cv2.imwrite("p3_convolucion.png",filt)
 
 
 cv2.waitKey (0)
-cv2.destroyAllWindows ()
+cv2.destroyAllWindows()

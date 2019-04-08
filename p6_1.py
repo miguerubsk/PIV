@@ -104,7 +104,7 @@ def calcularUmbralOtsu(img):
 			maximo = resultado[k]
 			indice = k
 
-	print(indice)
+	print("El umbral otsu es: "+str(indice))
 	return indice
 
 
