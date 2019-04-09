@@ -156,8 +156,8 @@ def umbralizarBloques(img, m, n, umbral):
 		if l==n:
 			o+=1
 			j=0
-		cv2.imshow("Ventana",ordenada)
-		cv2.waitKey (0)
+		#cv2.imshow("Ventana",ordenada)
+		#cv2.waitKey (0)
 	return ordenada
 
 
@@ -214,6 +214,7 @@ if __name__ == '__main__':
 			#Se umbraliza la imagen con el método Otsu
 			print("Umbralizando la imagen... \nEspera")
 			cv2.imwrite(Nombre,umbralizarBloques(img, int(m), int(n), umbral))
+			print("Terminado, comprueba la imagen resultante:"+Nombre)
 			input("Pulsa una tecla para continuar")
 			cv2.destroyAllWindows()
 		elif opcionMenu=="4":
