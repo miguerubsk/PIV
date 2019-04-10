@@ -137,12 +137,14 @@ def umbralizarBloques(img, m, n, umbral):
 			for k in range(x):
 				for l in range(y):
 					bloque[k,l]=img[(i*x)+k,(j*y)+l]
-		if umbral == "Otsu":
-			bloque = umbralizar(bloque, calcularUmbralOtsu(bloque))
-		if umbral == "General":
-			bloque = umbralizar(bloque, calcularUmbralGeneral(bloque))
+			if umbral == "Otsu":
+				bloque = umbralizar(bloque, calcularUmbralOtsu(bloque))
+			if umbral == "General":
+				bloque = umbralizar(bloque, calcularUmbralGeneral(bloque))
 
-		bloques.append(bloque)
+			bloques.append(bloque)
+			cv2.imshow("Ventana",bloque)
+			cv2.waitKey (0)
 
 	ordenada = np.zeros((filas, columnas), np.uint8)
 	l = 0
@@ -150,14 +152,14 @@ def umbralizarBloques(img, m, n, umbral):
 	for i in bloques:
 		for j in range(x):
 			for k in range(y):
-				ordenada[(l*x)+j,(o*y)+k] = i[j,k]
+				ordenada[(o*x)+j,(l*y)+k] = i[j,k]
 		if l<n:
 			l+=1
 		if l==n:
 			o+=1
-			j=0
-		#cv2.imshow("Ventana",ordenada)
-		#cv2.waitKey (0)
+			l=0
+		cv2.imshow("Ventana",ordenada)
+		cv2.waitKey (0)
 	return ordenada
 
 
