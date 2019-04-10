@@ -54,11 +54,13 @@ def calcularUmbralGeneral(img):
 				else: 
 					g2+=1
 					aux2 += img[i,j]
-		T = umbral
-		umbral = ( (aux1/g1) + (aux2/g2) )/2
+		
+		if (g1 != 0 and g2 != 0):
+			T = umbral
+			umbral = ( (aux1/g1) + (aux2/g2) )/2
+			
 	
 	print("El umbral general es: "+str(umbral))
-
 	return umbral
 
 def calcularUmbralOtsu(img):
@@ -129,7 +131,6 @@ def umbralizarBloques(img, m, n, umbral):
 	x = int(filas/m)
 	y = int(columnas/n)
 
-
 	bloques = []
 	for i in range(m):
 		for j in range(n):
@@ -143,8 +144,7 @@ def umbralizarBloques(img, m, n, umbral):
 				bloque = umbralizar(bloque, calcularUmbralGeneral(bloque))
 
 			bloques.append(bloque)
-			cv2.imshow("Ventana",bloque)
-			cv2.waitKey (0)
+	
 
 	ordenada = np.zeros((filas, columnas), np.uint8)
 	l = 0
@@ -158,9 +158,15 @@ def umbralizarBloques(img, m, n, umbral):
 		if l==n:
 			o+=1
 			l=0
-		cv2.imshow("Ventana",ordenada)
-		cv2.waitKey (0)
 	return ordenada
+	
+
+
+def umbralizarPixel(img, m, n, umbral):
+	filas, columnas = img.shape
+
+	result = np.zeros((filas, columnas), np.uint8)
+
 
 
 
