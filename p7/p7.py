@@ -16,6 +16,17 @@ def pintarRectangulo(img, obj, r, g, b):
 	return img
 
 
+def pintarBocas(img, obj, r, g, b):
+
+	for cuadrado in obj:
+		x = cuadrado[0]
+		y = cuadrado[1]
+		w = cuadrado[2]
+		h = cuadrado[3]
+		cv2.rectangle(img,(x+w,y+h),(x,y),(b, g, r),3)
+	return img
+
+
 
 if __name__ == '__main__':
 	os.system('clear')
@@ -38,7 +49,7 @@ if __name__ == '__main__':
 
 
 	img = pintarRectangulo(img, caras, 0, 0, 255 )
-	img = pintarRectangulo(img, bocas, 255, 255, 0)
+	img = pintarBocas(img, bocas, 255, 255, 0)
 	img = pintarRectangulo(img, ojos, 0,255,0 )
 	img = pintarRectangulo(img, nariz, 255, 0, 0 )
 
