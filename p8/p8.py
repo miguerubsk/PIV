@@ -26,11 +26,11 @@ if __name__ == '__main__':
 	imgGris2 = cv2.imread(Nombre2+".jpg", cv2.IMREAD_GRAYSCALE)
 	img2 = cv2.imread(Nombre1+".jpg")
 
-	flujo = cv2.calcOpticalFlowFarneback(imgGris1, imgGris2, 0.5, 3, 15, 3, 5, 1.2, 0)
+	flujo = cv2.calcOpticalFlowFarneback(imgGris1, imgGris2, None, 0.5, 3, 15, 3, 5, 1.2, 0)
 
 	pintarVectores(flujo, img1)
 
-	cv2.imshow(Nombre+"vectores",img)
+	cv2.imshow(Nombre1+"vectores",img)
 
 	cv2.waitKey(0)
 	os.system('clear')

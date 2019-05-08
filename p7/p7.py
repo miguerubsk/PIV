@@ -30,9 +30,9 @@ def pintarBocas(img, obj, r, g, b):
 
 if __name__ == '__main__':
 	os.system('clear')
-	detectorCaras = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+	detectorCaras = cv2.CascadeClassifier("face.xml")
 	detectorBocas = cv2.CascadeClassifier("mouth.xml")
-	detectorOjos = cv2.CascadeClassifier("haarcascade_eye.xml")
+	detectorOjos = cv2.CascadeClassifier("eye.xml")
 	detectorNariz = cv2.CascadeClassifier("nose.xml")
 
 
