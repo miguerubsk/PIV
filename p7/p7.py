@@ -16,17 +16,6 @@ def pintarRectangulo(img, obj, r, g, b):
 	return img
 
 
-def pintarBocas(img, obj, r, g, b):
-
-	for cuadrado in obj:
-		x = cuadrado[0]
-		y = cuadrado[1]
-		w = cuadrado[2]
-		h = cuadrado[3]
-		cv2.rectangle(img,(x+w,y+h),(x,y),(b, g, r),3)
-	return img
-
-
 
 if __name__ == '__main__':
 	os.system('clear')
@@ -36,9 +25,9 @@ if __name__ == '__main__':
 	detectorNariz = cv2.CascadeClassifier("nose.xml")
 
 
-	Nombre = "4" #input("Introduzca el nombre de la imagen con extension: ")
-	imgGris = cv2.imread(Nombre+".jpg", cv2.IMREAD_GRAYSCALE)
-	img = cv2.imread(Nombre+".jpg")
+	Nombre = input("Introduzca el nombre de la imagen con extension: ")
+	imgGris = cv2.imread(Nombre, cv2.IMREAD_GRAYSCALE)
+	img = cv2.imread(Nombre)
 
 
 	caras = detectorCaras.detectMultiScale(imgGris, 1.3, 5)
@@ -49,12 +38,13 @@ if __name__ == '__main__':
 
 
 	img = pintarRectangulo(img, caras, 0, 0, 255 )
-	img = pintarBocas(img, bocas, 255, 255, 0)
+	img = pintarRectangulo(img, bocas, 255, 255, 0)
 	img = pintarRectangulo(img, ojos, 0,255,0 )
 	img = pintarRectangulo(img, nariz, 255, 0, 0 )
 
 
 	cv2.imshow(Nombre+"_caras_sonrisas",img)
+	cv2.imwrite("result.png", img)
 
 	cv2.waitKey(0)
 	os.system('clear')
