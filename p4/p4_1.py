@@ -1,17 +1,20 @@
 import cv2, sys
-import numpy as np
-from matplotlib import pyplot as plt
 
-entrada = input("Nombre de la imagen: ")
+nombreImagen = "p4.png"
 
 
-img = cv2.imread(entrada, cv2.IMREAD_GRAYSCALE)
-cv2.imshow('original',img)
+imagen = cv2.imread(nombreImagen, cv2.IMREAD_GRAYSCALE)
+
+if (imagen is None):
+    print("Error al cargar la imagen")
+    sys.exit()
+
+cv2.imshow('original', imagen)
 
 """Ecualizamos el histograma"""
-ecualizada = cv2.equalizeHist(img)
+ecualizada = cv2.equalizeHist(imagen)
 
-cv2.imshow('resultado',ecualizada)
+cv2.imshow('resultado', ecualizada)
 
 
 cv2.waitKey(0)
